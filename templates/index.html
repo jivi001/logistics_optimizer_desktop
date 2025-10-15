@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Logistics Route Optimizer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚚 AI-Powered Logistics Route Optimizer</h1>
+            <p>Intelligent Delivery Routing using Dijkstra’s Algorithm</p>
+        </header>
+
+        <div class="controls">
+            <div class="select-group">
+                <label for="source-city">Source City</label>
+                <select id="source-city" class="city-select"></select>
+            </div>
+            <div class="select-group">
+                <label for="destination-city">Destination City</label>
+                <select id="destination-city" class="city-select"></select>
+            </div>
+            <button id="find-route-btn">Find Optimal Route</button>
+        </div>
+
+        <div id="loader" class="loader" style="display: none;"></div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <div class="results-container">
+            <div id="map"></div>
+            <div class="details-panel">
+                <div id="route-summary">
+                    <h2>Route Details</h2>
+                    <p>Select a source and destination to see the optimal route.</p>
+                </div>
+                <div id="ai-insights">
+                    <h2>🧠 AI Insights (from Gemini)</h2>
+                    <p>AI-powered suggestions will appear here after a route is calculated.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+</body>
+</html>
