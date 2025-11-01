@@ -47,34 +47,34 @@ Nexus Route AI is a production-ready logistics platform that delivers:
 
 ## 🚀 Quick Start
 
-1. Clone repository
+1. **Clone repository**:
 git clone https://github.com/jivi001/logistics_optimizer_desktop.git
 cd logistics_optimizer_desktop
 
-2. Create virtual environment
+2. **Create virtual environment**:
 python -m venv venv
 
-3. Activate virtual environment
+3. **Activate virtual environment**:
 Windows:
 venv\Scripts\activate
 
 macOS/Linux:
 source venv/bin/activate
 
-4. Install dependencies
+4. **Install dependencies**:
 pip install -r requirements.txt
 
-5. Configure environment
-Create .env file and add:
+5. **Configure environment**
+**Create**.env file and add:
 GEMINI_API_KEY=your_api_key_here
 FLASK_DEBUG=true
 PORT=5001
-6. Run application
+6. **Run application**:
 python app.py
 
-7. Open browser
+7. **Open browser**
 Navigate to: http://localhost:5001
-text
+
 
 ## ⚙️ Configuration
 
@@ -98,17 +98,17 @@ text
 ## 📁 Project Structure
 
 nexus-route-ai/
-├── app.py # Flask application entry point
-├── route_optimizer.py # Dijkstra's algorithm engine
-├── requirements.txt # Python dependencies
-├── .env # Environment variables
-├── templates/
-│ └── index.html # Main HTML template
-└── static/
-├── css/
-│ └── style.css # Styling
-└── js/
-└── script.js # Frontend logic
+- ├── app.py # Flask application entry point
+- ├── route_optimizer.py # Dijkstra's algorithm engine
+- ├── requirements.txt # Python dependencies
+- ├── .env # Environment variables
+- ├── templates/
+- │ └── index.html # Main HTML template
+- └── static/
+-  ├── css/
+-  │ └── style.css # Styling
+-  └── js/
+-  └── script.js # Frontend logic
 
 text
 
@@ -143,23 +143,22 @@ Automatically displays after route calculation:
 
 ### Core Routes
 
-GET /api/get_cities
-GET /api/get_shortest_route?src={city}&dest={city}
-POST /api/get_gemini_insights
+- GET /api/get_cities
+- GET /api/get_shortest_route?src={city}&dest={city}
+- POST /api/get_gemini_insights
 
 text
 
 ### AI Features
 
-POST /api/ai/chat
-POST /api/ai/predict_delivery_time
-POST /api/ai/optimize_multi_stop
-POST /api/ai/cost_estimate
-POST /api/ai/weather_impact
-POST /api/ai/safety_check
-POST /api/calculate_toll
+- POST /api/ai/chat
+- POST /api/ai/predict_delivery_time
+- POST /api/ai/optimize_multi_stop
+- POST /api/ai/cost_estimate
+- POST /api/ai/weather_impact
+- POST /api/ai/safety_check
+- POST /api/calculate_toll
 
-text
 
 ## 🔧 Troubleshooting
 
@@ -185,7 +184,6 @@ PORT=5002
 Or kill process (Linux/macOS)
 lsof -ti:5001 | xargs kill -9
 
-text
 
 ## 🤝 Contributing
 
