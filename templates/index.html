@@ -3,362 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered Logistics Route Optimizer</title>
+    <title>Nexus Route AI - Smart Logistics Intelligence</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <style>
-        .ai-features-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .tab-btn {
-            padding: 10px 20px;
-            border: 2px solid #1a73e8;
-            background: white;
-            color: #1a73e8;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 0.9em;
-        }
-        
-        .tab-btn:hover {
-            background: #e8f0fe;
-        }
-        
-        .tab-btn.active {
-            background: #1a73e8;
-            color: white;
-        }
-        
-        .ai-panel {
-            display: none;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            margin-top: 15px;
-        }
-        
-        .ai-panel.active {
-            display: block;
-        }
-        
-        .input-group {
-            margin-bottom: 15px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #3c4043;
-        }
-        
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-        
-        .ai-action-btn {
-            padding: 12px 24px;
-            background: #34a853;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 1em;
-            transition: background 0.3s ease;
-            margin-top: 10px;
-        }
-        
-        .ai-action-btn:hover {
-            background: #2d8f47;
-        }
-        
-        .ai-action-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        .result-box {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #1a73e8;
-        }
-        
-        .chat-container {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .chat-message {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        
-        .chat-message.user {
-            background: #e8f0fe;
-            text-align: right;
-        }
-        
-        .chat-message.ai {
-            background: white;
-            border: 1px solid #ddd;
-        }
-        
-        .chat-input-group {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .chat-input-group input {
-            flex: 1;
-        }
-        
-        .multi-stop-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .stop-item {
-            padding: 8px 15px;
-            background: #e8f0fe;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .remove-stop {
-            background: #d93025;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .cost-breakdown {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .cost-item {
-            padding: 12px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .cost-item strong {
-            color: #1a73e8;
-        }
-        
-        @media (max-width: 768px) {
-            .results-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .cost-breakdown {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🚚 AI-Powered Logistics Route Optimizer</h1>
-            <p>Smart route planning with Gemini AI insights</p>
+    <!-- Animated Background Gradient -->
+    <div class="bg-gradient-animated"></div>
+    
+    <!-- Main Container with Glassmorphism -->
+    <div class="app-container">
+        <!-- Hero Header -->
+        <header class="hero-header">
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 5 L45 15 L45 35 L25 45 L5 35 L5 15 Z" />
+                    <circle cx="25" cy="25" r="8" />
+                </svg>
+                <h1 class="brand-title">Nexus Route AI</h1>
+            </div>
+            <p class="tagline">Next-gen logistics intelligence powered by Gemini</p>
         </header>
 
-        <div id="error-message" class="error-message" style="display: none;"></div>
-
-        <div class="controls">
-            <div class="select-group">
-                <label for="source-city">Source City</label>
-                <select id="source-city" class="city-select">
-                    <option value="">-- Select Source --</option>
-                </select>
-            </div>
-
-            <div class="select-group">
-                <label for="destination-city">Destination City</label>
-                <select id="destination-city" class="city-select">
-                    <option value="">-- Select Destination --</option>
-                </select>
-            </div>
-
-            <button id="find-route-btn">Find Route</button>
+        <!-- Alert Banner -->
+        <div id="alert-banner" class="alert-banner hidden">
+            <span class="alert-icon">⚠️</span>
+            <span id="alert-message"></span>
+            <button class="alert-close" onclick="closeAlert()">×</button>
         </div>
 
-        <div class="results-container">
-            <div>
-                <div id="map"></div>
-                <div id="loader" class="loader" style="display: none;"></div>
-            </div>
-
-            <div class="details-panel">
-                <div id="route-summary">
-                    <h2>Route Details</h2>
-                    <p>Select a source and destination to see the optimal route.</p>
-                </div>
-
-                <div id="ai-insights">
-                    <h2>🧠 AI Insights</h2>
-                    <p>AI-powered suggestions will appear here after a route is calculated.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Features Section -->
-        <div style="margin-top: 40px;">
-            <h2 style="color: #1a73e8; border-bottom: 2px solid #e0e0e0; padding-bottom: 15px;">
-                🤖 Advanced AI Features
+        <!-- Route Planner Card -->
+        <section class="glass-card planner-card">
+            <h2 class="section-title">
+                <span class="title-icon">🎯</span>
+                Route Planner
             </h2>
             
-            <div class="ai-features-tabs">
-                <button class="tab-btn active" data-tab="chat">💬 AI Chat</button>
-                <button class="tab-btn" data-tab="predict">⏱️ Delivery Prediction</button>
-                <button class="tab-btn" data-tab="multistop">📍 Multi-Stop Optimizer</button>
-                <button class="tab-btn" data-tab="cost">💰 Cost Estimate</button>
-                <button class="tab-btn" data-tab="weather">🌦️ Weather Impact</button>
-                <button class="tab-btn" data-tab="safety">🛡️ Safety Check</button>
+            <div class="input-grid">
+                <div class="input-wrapper">
+                    <label for="source-city" class="floating-label">Origin</label>
+                    <div class="select-container">
+                        <select id="source-city" class="modern-select">
+                            <option value="">Select origin city</option>
+                        </select>
+                        <span class="select-arrow">
+                            <svg width="12" height="8" viewBox="0 0 12 8">
+                                <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="route-connector">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M5 20 L35 20" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/>
+                        <circle cx="35" cy="20" r="3" fill="currentColor"/>
+                    </svg>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="destination-city" class="floating-label">Destination</label>
+                    <div class="select-container">
+                        <select id="destination-city" class="modern-select">
+                            <option value="">Select destination city</option>
+                        </select>
+                        <span class="select-arrow">
+                            <svg width="12" height="8" viewBox="0 0 12 8">
+                                <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Chat Panel -->
-            <div id="chat-panel" class="ai-panel active">
-                <h3>AI Assistant</h3>
-                <div id="chat-container" class="chat-container"></div>
-                <div class="chat-input-group">
-                    <input type="text" id="chat-input" placeholder="Ask about routes, logistics, or delivery tips...">
-                    <button class="ai-action-btn" id="chat-send-btn">Send</button>
-                </div>
-            </div>
+            <button id="find-route-btn" class="primary-btn">
+                <span class="btn-content">
+                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M10 2L2 18L18 18Z" fill="currentColor"/>
+                    </svg>
+                    Calculate Optimal Route
+                </span>
+                <span class="btn-shine"></span>
+            </button>
+        </section>
 
-            <!-- Delivery Prediction Panel -->
-            <div id="predict-panel" class="ai-panel">
-                <h3>Delivery Time Prediction</h3>
-                <div class="input-group">
-                    <label>Vehicle Type</label>
-                    <select id="vehicle-type">
-                        <option value="truck">Truck</option>
-                        <option value="mini-truck">Mini Truck</option>
-                        <option value="van">Van</option>
-                    </select>
+        <!-- Results Section -->
+        <div class="results-layout">
+            <!-- Map Container -->
+            <section class="glass-card map-container">
+                <div id="map" class="interactive-map"></div>
+                <div id="loader" class="loader-pulse hidden">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring"></div>
                 </div>
-                <div class="input-group">
-                    <label>Cargo Weight (kg)</label>
-                    <input type="number" id="cargo-weight" placeholder="e.g., 5000">
-                </div>
-                <div class="input-group">
-                    <label>Departure Time</label>
-                    <input type="datetime-local" id="departure-time">
-                </div>
-                <button class="ai-action-btn" id="predict-btn">Get Prediction</button>
-                <div id="predict-result" class="result-box" style="display: none;"></div>
-            </div>
+            </section>
 
-            <!-- Multi-Stop Optimizer Panel -->
-            <div id="multistop-panel" class="ai-panel">
-                <h3>Multi-Stop Route Optimizer</h3>
-                <div class="input-group">
-                    <label>Starting City</label>
-                    <select id="start-city" class="city-select">
-                        <option value="">-- Select Starting City --</option>
-                    </select>
+            <!-- Insights Sidebar -->
+            <aside class="insights-sidebar">
+                <div class="glass-card route-details">
+                    <h3 class="card-header">
+                        <span class="header-icon">📊</span>
+                        Route Analytics
+                    </h3>
+                    <div id="route-summary" class="summary-content">
+                        <div class="empty-state">
+                            <svg class="empty-icon" width="80" height="80" viewBox="0 0 80 80">
+                                <circle cx="40" cy="40" r="30" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M40 25 L40 40 L52 48" stroke="currentColor" stroke-width="2" fill="none"/>
+                            </svg>
+                            <p>Select cities to view route details</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Add Delivery Stops</label>
-                    <select id="stop-city" class="city-select">
-                        <option value="">-- Select City to Add --</option>
-                    </select>
-                    <button class="ai-action-btn" id="add-stop-btn" style="margin-top: 10px;">Add Stop</button>
-                </div>
-                <div id="stops-list" class="multi-stop-list"></div>
-                <button class="ai-action-btn" id="optimize-stops-btn" style="margin-top: 15px;">Optimize Route</button>
-                <div id="multistop-result" class="result-box" style="display: none;"></div>
-            </div>
 
-            <!-- Cost Estimate Panel -->
-            <div id="cost-panel" class="ai-panel">
-                <h3>Cost Estimation</h3>
-                <div class="input-group">
-                    <label>Vehicle Type</label>
-                    <select id="cost-vehicle-type">
-                        <option value="truck">Truck</option>
-                        <option value="mini-truck">Mini Truck</option>
-                        <option value="van">Van</option>
-                    </select>
+                <div class="glass-card ai-insights">
+                    <h3 class="card-header">
+                        <span class="header-icon gradient-text">🧠</span>
+                        AI Intelligence
+                    </h3>
+                    <div id="ai-insights-content" class="insights-content">
+                        <div class="empty-state">
+                            <div class="ai-avatar">
+                                <span class="avatar-pulse"></span>
+                                AI
+                            </div>
+                            <p>Intelligent insights will appear after route calculation</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Cargo Weight (kg)</label>
-                    <input type="number" id="cost-cargo-weight" placeholder="e.g., 5000">
-                </div>
-                <div class="input-group">
-                    <label>Current Fuel Price (₹/liter)</label>
-                    <input type="number" id="fuel-price" value="100" placeholder="e.g., 100">
-                </div>
-                <button class="ai-action-btn" id="cost-btn">Calculate Costs</button>
-                <div id="cost-result" class="result-box" style="display: none;"></div>
-            </div>
-
-            <!-- Weather Impact Panel -->
-            <div id="weather-panel" class="ai-panel">
-                <h3>Weather Impact Analysis</h3>
-                <div class="input-group">
-                    <label>Season/Period</label>
-                    <select id="season">
-                        <option value="current">Current</option>
-                        <option value="summer">Summer (Mar-Jun)</option>
-                        <option value="monsoon">Monsoon (Jul-Sep)</option>
-                        <option value="winter">Winter (Oct-Feb)</option>
-                    </select>
-                </div>
-                <button class="ai-action-btn" id="weather-btn">Analyze Weather Impact</button>
-                <div id="weather-result" class="result-box" style="display: none;"></div>
-            </div>
-
-            <!-- Safety Check Panel -->
-            <div id="safety-panel" class="ai-panel">
-                <h3>Safety & Compliance Check</h3>
-                <div class="input-group">
-                    <label>Cargo Type</label>
-                    <select id="cargo-type">
-                        <option value="general">General Goods</option>
-                        <option value="perishable">Perishable Items</option>
-                        <option value="hazardous">Hazardous Materials</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="pharmaceuticals">Pharmaceuticals</option>
-                    </select>
-                </div>
-                <button class="ai-action-btn" id="safety-btn">Run Safety Check</button>
-                <div id="safety-result" class="result-box" style="display: none;"></div>
-            </div>
+            </aside>
         </div>
+
+        <!-- AI Features Hub -->
+        <section class="ai-hub">
+            <div class="hub-header">
+                <h2 class="hub-title gradient-text">AI Command Center</h2>
+                <p class="hub-subtitle">Advanced logistics intelligence tools</p>
+            </div>
+
+            <!-- Feature Navigation Pills -->
+            <nav class="feature-nav">
+                <button class="nav-pill active" data-feature="chat">
+                    <span class="pill-icon">💬</span>
+                    <span class="pill-label">AI Assistant</span>
+                </button>
+                <button class="nav-pill" data-feature="predict">
+                    <span class="pill-icon">⚡</span>
+                    <span class="pill-label">ETA Predict</span>
+                </button>
+                <button class="nav-pill" data-feature="multistop">
+                    <span class="pill-icon">🗺️</span>
+                    <span class="pill-label">Multi-Stop</span>
+                </button>
+                <button class="nav-pill" data-feature="cost">
+                    <span class="pill-icon">💰</span>
+                    <span class="pill-label">Cost Analysis</span>
+                </button>
+                <button class="nav-pill" data-feature="weather">
+                    <span class="pill-icon">🌦️</span>
+                    <span class="pill-label">Weather</span>
+                </button>
+                <button class="nav-pill" data-feature="safety">
+                    <span class="pill-icon">🛡️</span>
+                    <span class="pill-label">Safety</span>
+                </button>
+            </nav>
+
+            <!-- Feature Panels -->
+            <div class="features-container">
+                <!-- Chat Feature -->
+                <div id="chat-feature" class="feature-panel active glass-card">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="welcome-message">
+                            <div class="ai-avatar-large">AI</div>
+                            <p>Hello! I'm your logistics AI assistant. Ask me anything about routes, delivery optimization, or logistics strategies.</p>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            class="chat-input" 
+                            placeholder="Type your question..."
+                            autocomplete="off"
+                        />
+                        <button class="send-btn" id="chat-send-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ETA Prediction Feature -->
+                <div id="predict-feature" class="feature-panel glass-card">
+                    <h3 class="panel-title">Delivery Time Prediction</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Vehicle Type</label>
+                            <select id="vehicle-type" class="modern-input">
+                                <option value="truck">Heavy Truck</option>
+                                <option value="mini-truck">Mini Truck</option>
+                                <option value="van">Delivery Van</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cargo Weight (kg)</label>
+                            <input type="number" id="cargo-weight" class="modern-input" placeholder="e.g., 5000" />
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Departure Time</label>
+                            <input type="datetime-local" id="departure-time" class="modern-input" />
+                        </div>
+                    </div>
+                    <button class="secondary-btn" id="predict-btn">
+                        <span>Generate Prediction</span>
+                    </button>
+                    <div id="predict-result" class="result-card hidden"></div>
+                </div>
+
+                <!-- Multi-Stop Feature -->
+                <div id="multistop-feature" class="feature-panel glass-card">
+                    <h3 class="panel-title">Multi-Stop Route Optimizer</h3>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label class="form-label">Starting Point</label>
+                            <select id="start-city" class="modern-input">
+                                <option value="">Select starting city</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Add Delivery Stops</label>
+                            <div class="add-stop-group">
+                                <select id="stop-city" class="modern-input">
+                                    <option value="">Select city to add</option>
+                                </select>
+                                <button class="icon-btn" id="add-stop-btn">
+                                    <svg width="20" height="20" viewBox="0 0 20 20">
+                                        <path d="M10 5V15M5 10H15" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="stops-display" class="stops-container"></div>
+                    <button class="secondary-btn" id="optimize-stops-btn">
+                        <span>Optimize Route</span>
+                    </button>
+                    <div id="multistop-result" class="result-card hidden"></div>
+                </div>
+
+                <!-- Cost Analysis Feature -->
+                <div id="cost-feature" class="feature-panel glass-card">
+                    <h3 class="panel-title">Cost Estimation</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Vehicle Type</label>
+                            <select id="cost-vehicle-type" class="modern-input">
+                                <option value="truck">Heavy Truck</option>
+                                <option value="mini-truck">Mini Truck</option>
+                                <option value="van">Delivery Van</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cargo Weight (kg)</label>
+                            <input type="number" id="cost-cargo-weight" class="modern-input" placeholder="e.g., 5000" />
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Fuel Price (₹/liter)</label>
+                            <input type="number" id="fuel-price" class="modern-input" value="100" placeholder="100" />
+                        </div>
+                    </div>
+                    <button class="secondary-btn" id="cost-btn">
+                        <span>Calculate Costs</span>
+                    </button>
+                    <div id="cost-result" class="result-card hidden"></div>
+                </div>
+
+                <!-- Weather Feature -->
+                <div id="weather-feature" class="feature-panel glass-card">
+                    <h3 class="panel-title">Weather Impact Analysis</h3>
+                    <div class="form-group">
+                        <label class="form-label">Season/Period</label>
+                        <select id="season" class="modern-input">
+                            <option value="current">Current Conditions</option>
+                            <option value="summer">Summer (Mar-Jun)</option>
+                            <option value="monsoon">Monsoon (Jul-Sep)</option>
+                            <option value="winter">Winter (Oct-Feb)</option>
+                        </select>
+                    </div>
+                    <button class="secondary-btn" id="weather-btn">
+                        <span>Analyze Impact</span>
+                    </button>
+                    <div id="weather-result" class="result-card hidden"></div>
+                </div>
+
+                <!-- Safety Feature -->
+                <div id="safety-feature" class="feature-panel glass-card">
+                    <h3 class="panel-title">Safety & Compliance Check</h3>
+                    <div class="form-group">
+                        <label class="form-label">Cargo Type</label>
+                        <select id="cargo-type" class="modern-input">
+                            <option value="general">General Goods</option>
+                            <option value="perishable">Perishable Items</option>
+                            <option value="hazardous">Hazardous Materials</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="pharmaceuticals">Pharmaceuticals</option>
+                        </select>
+                    </div>
+                    <button class="secondary-btn" id="safety-btn">
+                        <span>Run Safety Check</span>
+                    </button>
+                    <div id="safety-result" class="result-card hidden"></div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
