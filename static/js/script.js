@@ -1,4 +1,4 @@
-// script.js - Complete AI-Powered Logistics Route Optimizer
+// script.js - Complete AI-Powered Logistics Route Optimizer (FIXED)
 
 // ===== GLOBAL STATE =====
 let map = null;
@@ -51,44 +51,78 @@ function displayRouteOnMap(routeData) {
         map.removeLayer(routeLayer);
     }
     
-    // Create polyline for route
-    const coordinates = routeData.path.map(city => {
+    // Validate input
+    if (!routeData || !routeData.path || !routeData.coordinates) {
+        console.error('Invalid route data:', routeData);
+        showAlert('Error: Invalid route data received', 'error');
+        return;
+    }
+    
+    // Create coordinates array with null check
+    const coordinates = [];
+    for (const city of routeData.path) {
         const coords = routeData.coordinates[city];
-        return [coords[0], coords[1]];
-    });
+        
+        if (!coords) {
+            console.error(`Missing coordinates for city: ${city}`);
+            showAlert(`Error: Missing coordinates for ${city}`, 'error');
+            return;
+        }
+        
+        if (!Array.isArray(coords) || coords.length < 2) {
+            console.error(`Invalid coordinates for city: ${city}`, coords);
+            showAlert(`Error: Invalid coordinates for ${city}`, 'error');
+            return;
+        }
+        
+        coordinates.push([coords[0], coords[1]]);
+    }
+    
+    // Check if we have valid coordinates
+    if (coordinates.length === 0) {
+        console.error('No valid coordinates found');
+        showAlert('Error: No valid coordinates for route', 'error');
+        return;
+    }
     
     routeLayer = L.layerGroup();
     
-    // Draw route line
-    const routeLine = L.polyline(coordinates, {
-        color: '#667eea',
-        weight: 4,
-        opacity: 0.8
-    }).addTo(routeLayer);
-    
-    // Add markers
-    routeData.path.forEach((city, index) => {
-        const coords = routeData.coordinates[city];
-        const isStart = index === 0;
-        const isEnd = index === routeData.path.length - 1;
+    try {
+        // Draw route line
+        const routeLine = L.polyline(coordinates, {
+            color: '#667eea',
+            weight: 4,
+            opacity: 0.8
+        }).addTo(routeLayer);
         
-        const iconHtml = isStart ? '🟢' : isEnd ? '🔴' : '📍';
+        // Add markers
+        routeData.path.forEach((city, index) => {
+            const coords = routeData.coordinates[city];
+            const isStart = index === 0;
+            const isEnd = index === routeData.path.length - 1;
+            
+            const iconHtml = isStart ? '🟢' : isEnd ? '🔴' : '📍';
+            
+            const marker = L.marker([coords[0], coords[1]], {
+                icon: L.divIcon({
+                    html: `<div style="font-size: 24px;">${iconHtml}</div>`,
+                    className: 'custom-marker',
+                    iconSize: [30, 30]
+                })
+            }).bindPopup(`<b>${city}</b>`);
+            
+            marker.addTo(routeLayer);
+        });
         
-        const marker = L.marker([coords[0], coords[1]], {
-            icon: L.divIcon({
-                html: `<div style="font-size: 24px;">${iconHtml}</div>`,
-                className: 'custom-marker',
-                iconSize: [30, 30]
-            })
-        }).bindPopup(`<b>${city}</b>`);
+        routeLayer.addTo(map);
         
-        marker.addTo(routeLayer);
-    });
-    
-    routeLayer.addTo(map);
-    
-    // Fit map to route bounds
-    map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+        // Fit map to route bounds
+        map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+        
+    } catch (error) {
+        console.error('Error displaying route on map:', error);
+        showAlert('Error displaying route on map', 'error');
+    }
 }
 
 // ===== API CALLS =====
@@ -131,7 +165,7 @@ async function findRoute() {
     document.getElementById('find-route-btn').disabled = true;
     
     try {
-        const response = await fetch(`/api/get_shortest_route?src=${source}&dest=${destination}`);
+        const response = await fetch(`/api/get_shortest_route?src=${encodeURIComponent(source)}&dest=${encodeURIComponent(destination)}`);
         
         if (!response.ok) {
             const errorData = await response.json();
@@ -139,6 +173,13 @@ async function findRoute() {
         }
         
         const routeData = await response.json();
+        
+        // Debug logging
+        console.log('=== Route Data ===');
+        console.log('Path:', routeData.path);
+        console.log('Coordinates:', routeData.coordinates);
+        console.log('==================');
+        
         currentRouteData = routeData;
         
         displayRouteSummary(routeData);
@@ -322,7 +363,7 @@ function updateStopsDisplay() {
     const stopsDisplay = document.getElementById('stops-display');
     
     if (multiStopList.length === 0) {
-        stopsDisplay.innerHTML = '<p style="color: rgba(255,255,255,0.5);">No stops added yet</p>';
+        stopsDisplay.innerHTML = '';
         return;
     }
     
@@ -626,15 +667,15 @@ function displayRouteSummary(data) {
     summaryDiv.innerHTML = `
         <div class="route-info">
             <div class="info-item">
-                <span class="info-label">Route:</span>
+                <span class="info-label">Route</span>
                 <span class="info-value">${pathString}</span>
             </div>
             <div class="info-item">
-                <span class="info-label">Distance:</span>
+                <span class="info-label">Distance</span>
                 <span class="info-value">${data.distance} km</span>
             </div>
             <div class="info-item">
-                <span class="info-label">Estimated Time:</span>
+                <span class="info-label">Estimated Time</span>
                 <span class="info-value">${data.time_hours} hours</span>
             </div>
         </div>
@@ -646,24 +687,31 @@ function displayRouteSummary(data) {
 
 function showLoader(show) {
     const loader = document.getElementById('loader');
-    loader.classList.toggle('hidden', !show);
+    if (loader) {
+        loader.classList.toggle('hidden', !show);
+    }
 }
 
 function showAlert(message, type = 'error') {
     const alertBanner = document.getElementById('alert-banner');
     const alertMessage = document.getElementById('alert-message');
     
-    alertMessage.textContent = message;
-    alertBanner.classList.remove('hidden');
-    
-    // Auto-hide after 5 seconds
-    setTimeout(() => {
-        closeAlert();
-    }, 5000);
+    if (alertMessage) {
+        alertMessage.textContent = message;
+        alertBanner.classList.remove('hidden');
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            closeAlert();
+        }, 5000);
+    }
 }
 
 function closeAlert() {
-    document.getElementById('alert-banner').classList.add('hidden');
+    const alertBanner = document.getElementById('alert-banner');
+    if (alertBanner) {
+        alertBanner.classList.add('hidden');
+    }
 }
 
 // Feature Navigation
@@ -695,6 +743,8 @@ function setupAIHubToggle() {
     const toggleHeader = document.getElementById('ai-hub-toggle');
     const aiHub = document.querySelector('.ai-hub');
     
+    if (!toggleHeader || !aiHub) return;
+    
     // Load saved state from localStorage
     const isCollapsed = localStorage.getItem('aiHubCollapsed') === 'true';
     if (isCollapsed) {
@@ -723,42 +773,80 @@ function setupAIHubToggle() {
 // ===== EVENT LISTENERS =====
 function attachEventListeners() {
     // Main route finder
-    document.getElementById('find-route-btn').addEventListener('click', findRoute);
+    const findRouteBtn = document.getElementById('find-route-btn');
+    if (findRouteBtn) {
+        findRouteBtn.addEventListener('click', findRoute);
+    }
     
     // AI Chat
-    document.getElementById('chat-send-btn').addEventListener('click', sendChatMessage);
-    document.getElementById('chat-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChatMessage();
-    });
+    const chatSendBtn = document.getElementById('chat-send-btn');
+    const chatInput = document.getElementById('chat-input');
+    
+    if (chatSendBtn) {
+        chatSendBtn.addEventListener('click', sendChatMessage);
+    }
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendChatMessage();
+        });
+    }
     
     // ETA Prediction
-    document.getElementById('predict-btn').addEventListener('click', predictDeliveryTime);
+    const predictBtn = document.getElementById('predict-btn');
+    if (predictBtn) {
+        predictBtn.addEventListener('click', predictDeliveryTime);
+    }
     
     // Multi-Stop
-    document.getElementById('add-stop-btn').addEventListener('click', addStop);
-    document.getElementById('optimize-stops-btn').addEventListener('click', optimizeMultiStop);
+    const addStopBtn = document.getElementById('add-stop-btn');
+    const optimizeStopsBtn = document.getElementById('optimize-stops-btn');
+    
+    if (addStopBtn) {
+        addStopBtn.addEventListener('click', addStop);
+    }
+    if (optimizeStopsBtn) {
+        optimizeStopsBtn.addEventListener('click', optimizeMultiStop);
+    }
     
     // Cost Estimation
-    document.getElementById('cost-btn').addEventListener('click', estimateCost);
+    const costBtn = document.getElementById('cost-btn');
+    if (costBtn) {
+        costBtn.addEventListener('click', estimateCost);
+    }
     
     // Weather Analysis
-    document.getElementById('weather-btn').addEventListener('click', analyzeWeather);
+    const weatherBtn = document.getElementById('weather-btn');
+    if (weatherBtn) {
+        weatherBtn.addEventListener('click', analyzeWeather);
+    }
     
     // Safety Check
-    document.getElementById('safety-btn').addEventListener('click', runSafetyCheck);
+    const safetyBtn = document.getElementById('safety-btn');
+    if (safetyBtn) {
+        safetyBtn.addEventListener('click', runSafetyCheck);
+    }
 }
 
 // Make functions globally accessible
 window.removeStop = removeStop;
 window.closeAlert = closeAlert;
-window.initializeApp = initializeApp;
+window.showAlert = showAlert;
+window.showLoader = showLoader;
 window.displayRouteSummary = displayRouteSummary;
 window.displayRouteOnMap = displayRouteOnMap;
+window.fetchCities = fetchCities;
+window.fetchAIInsights = fetchAIInsights;
+window.generateTollSegments = generateTollSegments;
+window.calculateTollCharges = calculateTollCharges;
 window.showTollCalculator = showTollCalculator;
 window.hideTollCalculator = hideTollCalculator;
-window.calculateTollCharges = calculateTollCharges;
-window.generateTollSegments = generateTollSegments;
-window.showLoader = showLoader;
-window.showAlert = showAlert;
+window.setupTollCalculator = setupTollCalculator;
 window.setupFeatureNavigation = setupFeatureNavigation;
-window  .setupAIHubToggle = setupAIHubToggle;
+window.setupAIHubToggle = setupAIHubToggle;
+window.initializeApp = initializeApp;
+window.initMap = initMap;
+window.attachEventListeners = attachEventListeners;
+window.findRoute = findRoute;
+window.predictDeliveryTime = predictDeliveryTime;
+window.addStop = addStop;
+window.optimizeMultiStop = optimizeMultiStop;

@@ -415,5 +415,44 @@ def calculate_toll():
         'cost_per_100km': toll_rates.get(vehicle_type, 270),
         'vehicle_type': vehicle_type
     })
+@app.route('/api/get_shortest_route')
+def get_shortest_route():
+    source = request.args.get('src')
+    destination = request.args.get('dest')
+    
+    if not source or not destination:
+        return jsonify({"error": "Source and destination required"}), 400
+    
+    # Normalize city names
+    source = source.strip().title()
+    destination = destination.strip().title()
+    
+    print(f"Finding route: {source} → {destination}")  # Debug log
+    
+    path, distance = optimizer.dijkstra(source, destination)
+    
+    if path and distance is not None:
+        estimated_time = optimizer.calculate_estimated_time(distance)
+        
+        # Build coordinates dictionary
+        coordinates = {}
+        for city in path:
+            coords = optimizer.city_coordinates.get(city)
+            if coords:
+                coordinates[city] = coords
+            else:
+                print(f"⚠️ WARNING: Missing coordinates for {city}")
+        
+        print(f"✓ Route found: {' → '.join(path)}")
+        print(f"✓ Coordinates: {coordinates}")
+        
+        return jsonify({
+            "path": path,
+            "distance": round(distance, 2),
+            "time_hours": round(estimated_time, 2),
+            "coordinates": coordinates
+        })
+    else:
+        return jsonify({"error": f"No route found between {source} and {destination}"}), 404
 
 #   ============================================
