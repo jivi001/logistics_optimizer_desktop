@@ -1,1010 +1,256 @@
-# 🚚 Nexus Route AI - Smart Logistics Intelligence Platform
+text
+# 🚚 Nexus Route AI - Smart Logistics Platform
 
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0+-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Google Gemini](https://img.shields.io/badge/Gemini_AI-Enabled-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-> **Next-generation AI-powered logistics route optimization platform** combining Dijkstra's algorithm with Google Gemini AI for intelligent delivery planning across Indian cities.
-
----
-
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Demo](#-demo)
-- [Prerequisites](#-prerequisites)
-- [Installation Guide](#-installation-guide)
-  - [Windows](#windows-installation)
-  - [macOS](#macos-installation)
-  - [Linux](#linux-installation)
-- [Configuration](#-configuration)
-- [Running the Application](#-running-the-application)
-- [Project Structure](#-project-structure)
-- [Usage Guide](#-usage-guide)
-- [API Documentation](#-api-documentation)
-- [Contributing](#-contributing)
-- [Troubleshooting](#-troubleshooting)
-- [FAQ](#-faq)
-- [License](#-license)
-
----
+> AI-powered logistics route optimization platform combining Dijkstra's algorithm with Google Gemini AI for intelligent delivery planning across Indian cities.
 
 ## 🎯 Overview
 
-**Nexus Route AI** is a production-ready logistics optimization platform that leverages:
+Nexus Route AI is a production-ready logistics platform that delivers:
 
-- **Graph Theory**: Dijkstra's algorithm for optimal path calculation
-- **AI Intelligence**: Google Gemini AI for natural language insights
-- **Real-time Calculations**: Toll estimation, cost analysis, and ETA predictions
-- **Premium UX**: Elegant glassmorphism design with responsive interface
+- **Smart Route Planning** using Dijkstra's algorithm
+- **AI-Powered Insights** via Google Gemini
+- **Real-time Cost Analysis** including tolls, fuel, and operational expenses
+- **Interactive Maps** with Leaflet.js visualization
+- **Premium UI/UX** with elegant glassmorphism design
 
-### Key Capabilities
-
-✅ **Route Optimization** - Find shortest paths between 20+ Indian cities  
-✅ **AI Assistant** - Natural language logistics queries  
-✅ **Cost Estimation** - Fuel, toll, and operational expenses  
-✅ **ETA Prediction** - AI-powered delivery time estimates  
-✅ **Multi-Stop Planning** - Optimize sequences for multiple destinations  
-✅ **Toll Calculator** - NHAI-based toll cost estimation  
-✅ **Weather Analysis** - Seasonal route planning recommendations  
-✅ **Safety Compliance** - Cargo-specific regulations and documentation  
-
----
-
-## ✨ Features
-
-### 🗺️ Core Features
+### ✨ Key Features
 
 | Feature | Description |
 |---------|-------------|
-| **Intelligent Route Planning** | Dijkstra's algorithm with interactive map visualization |
-| **20+ City Network** | Pre-configured network of major Indian cities |
-| **Real-time Calculations** | Distance, time, toll, and cost estimates |
-| **Interactive Maps** | Leaflet.js integration with custom markers |
-
-### 🤖 AI Command Center (6 Tools)
-
-1. **💬 AI Assistant** - Conversational logistics advisor
-2. **⚡ ETA Prediction** - Smart delivery time estimation with risk analysis
-3. **🗺️ Multi-Stop Optimizer** - Route sequencing for multiple deliveries
-4. **💰 Cost Analysis** - Comprehensive expense breakdown (fuel, tolls, maintenance)
-5. **🌦️ Weather Impact** - Seasonal route analysis and precautions
-6. **🛡️ Safety Check** - Compliance verification and documentation requirements
-
-### 🛣️ Toll Calculator
-
-- Vehicle-specific rates (Car, LCV, Truck, Multi-Axle)
-- Route segment breakdown
-- NHAI-based estimates
-- Plaza count prediction
-- Cost per 100km analysis
-
-### 🎨 Premium UI/UX
-
-- Elegant dark theme with glassmorphism effects
-- Fully responsive (mobile, tablet, desktop)
-- Collapsible AI Command Center
-- Smooth animations and transitions
-- Persistent UI state with localStorage
-
----
-
-## 🎬 Demo
-
-**Live Demo**: [Coming Soon]  
-**Video Demo**: [Coming Soon]
-
-### Screenshots
-
-| Route Planning | AI Command Center | Toll Calculator |
-|---------------|-------------------|-----------------|
-| ![Route](https://via.placeholder.com/300x200/667eea/ffffff?text=Route+Planning) | ![AI](https://via.placeholder.com/300x200/764ba2/ffffff?text=AI+Features) | ![Toll](https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Toll+Calculator) |
-
----
+| 🗺️ **Route Optimization** | Find shortest paths between 20+ Indian cities |
+| 💬 **AI Assistant** | Natural language logistics queries |
+| ⚡ **ETA Prediction** | Smart delivery time estimates with risk analysis |
+| 💰 **Cost Estimation** | Fuel, toll, driver, and maintenance breakdown |
+| 🛣️ **Toll Calculator** | NHAI-based estimates with vehicle-specific rates |
+| 🌦️ **Weather Analysis** | Seasonal route planning recommendations |
+| 🛡️ **Safety Compliance** | Cargo-specific regulations and documentation |
 
 ## 📋 Prerequisites
 
-Before installation, ensure you have:
+| Requirement | Version | Notes |
+|------------|---------|-------|
+| Python | 3.8+ | [Download](https://www.python.org/downloads/) |
+| pip | Latest | Comes with Python |
+| Git | Latest | [Download](https://git-scm.com/downloads) |
+| Google Gemini API | Free tier | [Get key](https://makersuite.google.com/app/apikey) |
 
-### Required Software
+**System Requirements:**
+- OS: Windows 10+, macOS 10.14+, or Linux (Ubuntu 20.04+)
+- RAM: Minimum 2GB
+- Storage: 500MB free space
+- Browser: Chrome, Firefox, Safari, or Edge (latest)
 
-| Software | Version | Download Link |
-|----------|---------|---------------|
-| **Python** | 3.8 or higher | [python.org](https://www.python.org/downloads/) |
-| **pip** | Latest | Comes with Python |
-| **Git** | Latest | [git-scm.com](https://git-scm.com/downloads) |
+## 🚀 Quick Start
 
-### Required API Keys
-
-- **Google Gemini API Key** (Free tier available)
-  - Get it at: [Google AI Studio](https://makersuite.google.com/app/apikey)
-  - Required for AI features
-
-### System Requirements
-
-- **OS**: Windows 10+, macOS 10.14+, or Linux (Ubuntu 20.04+)
-- **RAM**: Minimum 2GB
-- **Storage**: 500MB free space
-- **Browser**: Chrome, Firefox, Safari, or Edge (latest versions)
-
----
-
-## 🚀 Installation Guide
-
-### Quick Start (All Platforms)
-
-1. Clone the repository
-git clone https://github.com/yourusername/nexus-route-ai.git
-cd nexus-route-ai
+1. Clone repository
+git clone https://github.com/jivi001/logistics_optimizer_desktop.git
+cd logistics_optimizer_desktop
 
 2. Create virtual environment
 python -m venv venv
 
 3. Activate virtual environment
-On Windows:
+Windows:
 venv\Scripts\activate
 
-On macOS/Linux:
+macOS/Linux:
 source venv/bin/activate
 
 4. Install dependencies
 pip install -r requirements.txt
 
-5. Configure environment variables
-Create .env file (see Configuration section)
-6. Run the application
-python app.py
-
-text
-
----
-
-### Windows Installation
-
-#### Step 1: Install Python
-
-1. Download Python from [python.org](https://www.python.org/downloads/)
-2. Run installer and **check "Add Python to PATH"**
-3. Verify installation:
-python --version
-pip --version
-
-text
-
-#### Step 2: Install Git (Optional but Recommended)
-
-1. Download from [git-scm.com](https://git-scm.com/download/win)
-2. Install with default settings
-
-#### Step 3: Clone Repository
-
-**Option A: Using Git**
-git clone https://github.com/yourusername/nexus-route-ai.git
-cd nexus-route-ai
-
-text
-
-**Option B: Download ZIP**
-1. Download ZIP from GitHub
-2. Extract to desired location
-3. Open Command Prompt in extracted folder
-
-#### Step 4: Create Virtual Environment
-
-python -m venv venv
-venv\Scripts\activate
-
-text
-
-You should see `(venv)` in your command prompt.
-
-#### Step 5: Install Dependencies
-
-pip install --upgrade pip
-pip install -r requirements.txt
-
-text
-
-#### Step 6: Configure Environment
-
-Create `.env` file in project root:
-type nul > .env
-notepad .env
-
-text
-
-Add to `.env`:
+5. Configure environment
+Create .env file and add:
 GEMINI_API_KEY=your_api_key_here
 FLASK_DEBUG=true
 PORT=5001
-
-text
-
-#### Step 7: Run Application
-
+6. Run application
 python app.py
 
+7. Open browser
+Navigate to: http://localhost:5001
 text
-
-Open browser: `http://localhost:5001`
-
----
-
-### macOS Installation
-
-#### Step 1: Install Homebrew (if not installed)
-
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-text
-
-#### Step 2: Install Python
-
-brew install python@3.11
-python3 --version
-
-text
-
-#### Step 3: Install Git
-
-brew install git
-
-text
-
-#### Step 4: Clone Repository
-
-git clone https://github.com/yourusername/nexus-route-ai.git
-cd nexus-route-ai
-
-text
-
-#### Step 5: Create Virtual Environment
-
-python3 -m venv venv
-source venv/bin/activate
-
-text
-
-#### Step 6: Install Dependencies
-
-pip install --upgrade pip
-pip install -r requirements.txt
-
-text
-
-#### Step 7: Configure Environment
-
-touch .env
-nano .env
-
-text
-
-Add configuration:
-GEMINI_API_KEY=your_api_key_here
-FLASK_DEBUG=true
-PORT=5001
-
-text
-
-Save with `Ctrl+O`, Exit with `Ctrl+X`
-
-#### Step 8: Run Application
-
-python app.py
-
-text
-
-Open browser: `http://localhost:5001`
-
----
-
-### Linux Installation
-
-#### Step 1: Update System
-
-sudo apt update
-sudo apt upgrade -y
-
-text
-
-#### Step 2: Install Python and Dependencies
-
-Install Python 3.11
-sudo apt install python3.11 python3.11-venv python3-pip git -y
-
-Verify installation
-python3 --version
-pip3 --version
-
-text
-
-#### Step 3: Clone Repository
-
-git clone https://github.com/yourusername/nexus-route-ai.git
-cd nexus-route-ai
-
-text
-
-#### Step 4: Create Virtual Environment
-
-python3 -m venv venv
-source venv/bin/activate
-
-text
-
-#### Step 5: Install Dependencies
-
-pip install --upgrade pip
-pip install -r requirements.txt
-
-text
-
-#### Step 6: Configure Environment
-
-touch .env
-nano .env
-
-text
-
-Add configuration:
-GEMINI_API_KEY=your_api_key_here
-FLASK_DEBUG=true
-PORT=5001
-
-text
-
-Save with `Ctrl+O`, Exit with `Ctrl+X`
-
-#### Step 7: Run Application
-
-python app.py
-
-text
-
-Open browser: `http://localhost:5001`
-
----
 
 ## ⚙️ Configuration
 
-### Environment Variables
+Create `.env` file in project root:
 
-Create a `.env` file in the project root:
-
-============================================
-REQUIRED CONFIGURATION
-============================================
-Google Gemini AI API Key
-Get your key at: https://makersuite.google.com/app/apikey
+Required
 GEMINI_API_KEY=your_gemini_api_key_here
 
-============================================
-OPTIONAL CONFIGURATION
-============================================
-Flask Debug Mode (true/false)
+Optional
 FLASK_DEBUG=true
-
-Server Port (default: 5001)
 PORT=5001
 
-Flask Secret Key (for sessions)
-SECRET_KEY=your_random_secret_key_here
 text
 
-### Getting Gemini API Key
-
-1. **Visit**: [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. **Sign in** with your Google account
-3. **Create API Key**: Click "Create API Key"
-4. **Copy the key** and paste into `.env` file
-5. **Important**: Keep your API key secret (don't commit to Git)
-
-### Configuring for Production
-
-For production deployment, update `.env`:
-
-GEMINI_API_KEY=your_production_api_key
-FLASK_DEBUG=false
-PORT=8000
-SECRET_KEY=generate_strong_random_secret_key
-
-text
-
-Generate secret key:
-python -c "import secrets; print(secrets.token_hex(32))"
-
-text
-
----
-
-## 🏃 Running the Application
-
-### Development Mode
-
-Activate virtual environment
-source venv/bin/activate # macOS/Linux
-venv\Scripts\activate # Windows
-
-Run the application
-python app.py
-
-text
-
-Application will be available at: `http://localhost:5001`
-
-### Production Mode
-
-For production deployment, use Gunicorn:
-
-Install Gunicorn
-pip install gunicorn
-
-Run with Gunicorn
-gunicorn -w 4 -b 0.0.0.0:8000 app:app
-
-text
-
-### Running in Background (Linux/macOS)
-
-nohup python app.py > app.log 2>&1 &
-
-text
-
-### Docker Deployment (Optional)
-
-Create `Dockerfile`:
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5001
-CMD ["python", "app.py"]
-
-text
-
-Build and run:
-docker build -t nexus-route-ai .
-docker run -p 5001:5001 --env-file .env nexus-route-ai
-
-text
-
----
+**Get Gemini API Key:**
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Sign in with Google account
+3. Click "Create API Key"
+4. Copy key to `.env` file
 
 ## 📁 Project Structure
 
 nexus-route-ai/
-│
-├── 📄 app.py # Flask application (main entry point)
-├── 📄 route_optimizer.py # Dijkstra's algorithm implementation
-├── 📄 requirements.txt # Python dependencies
-├── 📄 .env # Environment variables (create this)
-├── 📄 .gitignore # Git ignore rules
-├── 📄 README.md # This file
-├── 📄 LICENSE # MIT License
-│
-├── 📁 templates/
-│ └── 📄 index.html # Main HTML template
-│
-├── 📁 static/
-│ ├── 📁 css/
-│ │ └── 📄 style.css # Premium styling
-│ ├── 📁 js/
-│ │ └── 📄 script.js # Frontend logic
-│ └── 📁 images/ # (Optional) Images/logos
-│
-├── 📁 venv/ # Virtual environment (auto-generated)
-└── 📁 pycache/ # Python cache (auto-generated)
+├── app.py # Flask application entry point
+├── route_optimizer.py # Dijkstra's algorithm engine
+├── requirements.txt # Python dependencies
+├── .env # Environment variables
+├── templates/
+│ └── index.html # Main HTML template
+└── static/
+├── css/
+│ └── style.css # Styling
+└── js/
+└── script.js # Frontend logic
 
 text
 
----
+## 📖 Usage
 
-## 📖 Usage Guide
+### Basic Route Planning
 
-### 1. Basic Route Planning
+1. Select origin and destination cities from dropdowns
+2. Click "Calculate Optimal Route"
+3. View route on interactive map with distance and time
+4. Review AI-powered insights and toll estimates
 
-1. **Select Origin City**: Choose starting point from dropdown
-2. **Select Destination City**: Choose endpoint
-3. **Calculate Route**: Click "Calculate Optimal Route" button
-4. **View Results**:
-   - Route displayed on interactive map
-   - Distance and time estimates
-   - AI-powered insights
-   - Toll cost breakdown
+### AI Command Center (6 Tools)
 
-### 2. Using AI Command Center
+Click "AI Command Center" header to access:
 
-#### Accessing AI Features
+1. **AI Assistant** - Natural language logistics queries
+2. **ETA Prediction** - Delivery time estimates with risk factors
+3. **Multi-Stop Optimizer** - Sequence planning for multiple deliveries
+4. **Cost Analysis** - Comprehensive expense breakdown
+5. **Weather Impact** - Seasonal route analysis
+6. **Safety Check** - Compliance and documentation requirements
 
-1. **Toggle Section**: Click "AI Command Center" header to expand/collapse
-2. **Select Tool**: Click on any of the 6 feature pills
-3. **Fill Form**: Enter required information
-4. **Get Results**: Click action button to generate AI insights
+### Toll Calculator
 
-#### AI Assistant Chat
+Automatically displays after route calculation:
+- Change vehicle type to update estimates
+- View segment-wise breakdown
+- Based on NHAI rates
 
-Example queries:
+## 📡 API Endpoints
 
-"What's the best route from Mumbai to Delhi?"
-
-"Tips for monsoon season driving"
-
-"How to reduce fuel costs?"
-
-"Safety measures for transporting electronics"
-
-text
-
-#### ETA Prediction
-
-Required inputs:
-- Vehicle Type (Heavy Truck/Mini Truck/Van)
-- Cargo Weight (kg)
-- Departure Time
-
-Output:
-- Estimated delivery time
-- Best departure window
-- Risk factors and delays
-
-#### Multi-Stop Optimizer
-
-1. Select starting city
-2. Add multiple delivery stops
-3. Click "Optimize Route"
-4. Get suggested optimal sequence
-
-#### Cost Estimation
-
-Required inputs:
-- Vehicle type
-- Cargo weight
-- Current fuel price (₹/liter)
-
-Output:
-- Total cost breakdown (fuel, tolls, driver, maintenance)
-- Cost per kilometer
-- Cost-saving recommendations
-
-### 3. Toll Calculator
-
-- **Automatic**: Appears after route calculation
-- **Interactive**: Change vehicle type to update costs
-- **Detailed**: View segment-wise breakdown
-- **Accurate**: Based on NHAI rates
-
----
-
-## 📡 API Documentation
-
-### Base URL
-
-http://localhost:5001/api
-
-text
-
-### Endpoints
-
-#### 1. Get Cities
+### Core Routes
 
 GET /api/get_cities
-
-text
-
-**Response:**
-{
-"cities": ["Mumbai", "Delhi", "Bangalore", "Hyderabad", ...],
-"coordinates": {
-"Mumbai": [19.0760, 72.8777],
-"Delhi": [28.7041, 77.1025],
-...
-}
-}
-
-text
-
-#### 2. Calculate Shortest Route
-
-GET /api/get_shortest_route?src=Mumbai&dest=Delhi
-
-text
-
-**Parameters:**
-- `src`: Source city name
-- `dest`: Destination city name
-
-**Response:**
-{
-"path": ["Mumbai", "Surat", "Ahmedabad", "Jaipur", "Delhi"],
-"distance": 1420.5,
-"time_hours": 23.67,
-"coordinates": {
-"Mumbai": [19.0760, 72.8777],
-...
-}
-}
-
-text
-
-#### 3. Get AI Insights
-
+GET /api/get_shortest_route?src={city}&dest={city}
 POST /api/get_gemini_insights
-Content-Type: application/json
-
-{
-"path": ["Mumbai", "Delhi"],
-"distance": 1420
-}
 
 text
 
-**Response:**
-{
-"insights": "Route Summary: Direct highway route...\nChallenges: Heavy traffic in urban areas..."
-}
-
-text
-
-#### 4. AI Chat
+### AI Features
 
 POST /api/ai/chat
-Content-Type: application/json
-
-{
-"message": "Best time to travel from Mumbai to Delhi?",
-"context": {
-"current_route": "Mumbai → Delhi",
-"distance": 1420
-}
-}
-
-text
-
-#### 5. Predict Delivery Time
-
 POST /api/ai/predict_delivery_time
-Content-Type: application/json
-
-{
-"path": ["Mumbai", "Delhi"],
-"distance": 1420,
-"vehicle_type": "truck",
-"cargo_weight": 5000,
-"departure_time": "2025-11-02T06:00"
-}
-
-text
-
-#### 6. Cost Estimation
-
+POST /api/ai/optimize_multi_stop
 POST /api/ai/cost_estimate
-Content-Type: application/json
-
-{
-"distance": 1420,
-"vehicle_type": "truck",
-"cargo_weight": 5000,
-"fuel_price": 100
-}
-
-text
-
-#### 7. Calculate Toll
-
+POST /api/ai/weather_impact
+POST /api/ai/safety_check
 POST /api/calculate_toll
-Content-Type: application/json
-
-{
-"distance": 1420,
-"vehicle_type": "truck"
-}
 
 text
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Follow these steps:
-
-### Fork & Clone
-
-1. Fork the repository on GitHub
-2. Clone your fork
-git clone https://github.com/YOUR-USERNAME/nexus-route-ai.git
-cd nexus-route-ai
-
-3. Add upstream remote
-git remote add upstream https://github.com/original-repo/nexus-route-ai.git
-
-text
-
-### Create Branch
-
-Create feature branch
-git checkout -b feature/amazing-feature
-
-Or bug fix branch
-git checkout -b fix/bug-description
-
-text
-
-### Make Changes
-
-1. **Code**: Make your changes
-2. **Test**: Ensure everything works
-3. **Commit**: Write clear commit messages
-
-git add .
-git commit -m "feat: add amazing new feature"
-
-text
-
-### Commit Message Convention
-
-Use [Conventional Commits](https://www.conventionalcommits.org/):
-
-- `feat:` New feature
-- `fix:` Bug fix
-- `docs:` Documentation changes
-- `style:` Code style changes (formatting, etc.)
-- `refactor:` Code refactoring
-- `test:` Adding tests
-- `chore:` Maintenance tasks
-
-### Push & Pull Request
-
-Push to your fork
-git push origin feature/amazing-feature
-
-Create Pull Request on GitHub
-text
-
-### Development Guidelines
-
-✅ **Code Style**
-- Follow PEP 8 for Python
-- Use meaningful variable names
-- Add docstrings for functions
-- Comment complex logic
-
-✅ **Testing**
-- Test all features locally
-- Verify on different browsers
-- Check responsive design
-
-✅ **Documentation**
-- Update README if needed
-- Add API documentation for new endpoints
-- Include code comments
-
----
 
 ## 🔧 Troubleshooting
 
 ### Common Issues
 
-#### 1. ModuleNotFoundError
-
-**Error:** `ModuleNotFoundError: No module named 'flask'`
-
-**Solution:**
-Activate virtual environment first
+**ModuleNotFoundError**
+Solution: Activate virtual environment first
 source venv/bin/activate # macOS/Linux
 venv\Scripts\activate # Windows
-
-Then install dependencies
 pip install -r requirements.txt
 
 text
 
-#### 2. Gemini API Error
-
-**Error:** `Gemini API is not configured`
-
-**Solution:**
+**Gemini API Error**
 - Verify `.env` file exists
-- Check `GEMINI_API_KEY` is set correctly
-- Get new API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- Check `GEMINI_API_KEY` is correct
+- Get new key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
-#### 3. Port Already in Use
-
-**Error:** `Address already in use`
-
-**Solution:**
+**Port Already in Use**
 Change port in .env
 PORT=5002
 
-Or kill process using port (Linux/macOS)
+Or kill process (Linux/macOS)
 lsof -ti:5001 | xargs kill -9
 
-Windows
-netstat -ano | findstr :5001
-taskkill /PID <PID> /F
-
 text
 
-#### 4. Map Not Displaying
+## 🤝 Contributing
 
-**Solution:**
-- Check internet connection (Leaflet.js needs CDN access)
-- Clear browser cache
-- Check browser console for errors
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'feat: add feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
 
-#### 5. Virtual Environment Issues
-
-**Windows Error:** `venv\Scripts\activate : File cannot be loaded`
-
-**Solution:**
-Run PowerShell as Administrator
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-
-Then activate
-venv\Scripts\activate
-
-text
-
----
-
-## ❓ FAQ
-
-**Q: Is this free to use?**  
-A: Yes, completely free and open-source under MIT License.
-
-**Q: Do I need a paid Google account for Gemini API?**  
-A: No, free tier is available with generous quota.
-
-**Q: Can I add more cities?**  
-A: Yes! Edit `route_optimizer.py` and add cities to the graph.
-
-**Q: How accurate are toll estimates?**  
-A: Based on NHAI rates; actual charges may vary by ±10%.
-
-**Q: Can I deploy this commercially?**  
-A: Yes, MIT License allows commercial use with attribution.
-
-**Q: Does it work offline?**  
-A: Partially. Route calculation works offline, but AI features need internet.
-
-**Q: What browsers are supported?**  
-A: All modern browsers (Chrome, Firefox, Safari, Edge).
-
-**Q: Can I customize the UI?**  
-A: Yes! All CSS is in `static/css/style.css`.
-
----
+**Commit Convention:**
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation
+- `style:` Formatting
+- `refactor:` Code refactoring
+- `test:` Tests
+- `chore:` Maintenance
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+MIT License - Copyright (c) 2025 Jivi
 
-MIT License
-
-Copyright (c) 2025 Jivi
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-text
-
----
+Permission is granted to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of this software.
 
 ## 👨‍💻 Author
 
 **Jivi** - AI & Data Science Engineer
 
-- 🌐 GitHub: [@yourusername](https://github.com/yourusername)
-- 💼 LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- 📧 Email: your.email@example.com
-- 🐦 Twitter: [@yourhandle](https://twitter.com/yourhandle)
-
----
+- 🌐 GitHub: [@jivi001](https://github.com/jivi001)
+- 💼 LinkedIn: [jivi001](https://www.linkedin.com/in/jivi001)
+- 🐦 Twitter: [@1Jivitesh](https://x.com/1Jivitesh)
+- 📧 Email: jiviteshgd28@gmail.com
 
 ## 🙏 Acknowledgments
 
-Special thanks to:
-
-- **Google Gemini AI** - Natural language processing capabilities
-- **OpenStreetMap** - Map data and tile services
-- **Leaflet.js** - Interactive mapping library
-- **Flask Community** - Excellent framework and documentation
-- **NHAI** - Toll rate reference data
-- **Open Source Community** - Inspiration and support
-
----
-
-## 📊 Project Stats
-
-![GitHub Stars](https://img.shields.io/github/stars/yourusername/nexus-route-ai?style=social)
-![GitHub Forks](https://img.shields.io/github/forks/yourusername/nexus-route-ai?style=social)
-![GitHub Issues](https://img.shields.io/github/issues/yourusername/nexus-route-ai)
-![GitHub Pull Requests](https://img.shields.io/github/issues-pr/yourusername/nexus-route-ai)
-
----
-
-## 🌟 Star History
-
-If you find this project useful, please consider giving it a ⭐ on GitHub!
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/nexus-route-ai&type=Date)](https://star-history.com/#yourusername/nexus-route-ai&Date)
-
----
+- **Google Gemini AI** - Natural language processing
+- **OpenStreetMap** - Map data
+- **Leaflet.js** - Interactive mapping
+- **Flask Community** - Framework and documentation
+- **NHAI** - Toll rate reference
 
 ## 🚀 Roadmap
 
-### Version 2.0 (Planned)
-
+**v2.0 (Planned)**
 - [ ] Real-time traffic integration
 - [ ] Live weather API
-- [ ] Expand to 50+ cities
-- [ ] Route comparison feature
+- [ ] 50+ cities
+- [ ] Route comparison
 - [ ] User authentication
 - [ ] Save and share routes
-- [ ] Mobile app (React Native)
-- [ ] Fleet management dashboard
+- [ ] Mobile app
 
-### Version 3.0 (Future)
-
-- [ ] Machine learning for route prediction
-- [ ] Integration with GPS devices
+**v3.0 (Future)**
+- [ ] ML route prediction
+- [ ] GPS device integration
 - [ ] Multi-language support
-- [ ] API rate limiting
 - [ ] Database integration
 - [ ] Analytics dashboard
 
----
-
-## 📞 Support & Contact
-
-### Get Help
+## 📞 Support
 
 - 📖 **Documentation**: Read this README
-- 🐛 **Bug Reports**: [Open an Issue](https://github.com/yourusername/nexus-route-ai/issues)
-- 💡 **Feature Requests**: [Submit Request](https://github.com/yourusername/nexus-route-ai/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/nexus-route-ai/discussions)
-- 📧 **Email**: your.email@example.com
-
-### Stay Updated
-
-- ⭐ Star the repository
-- 👁️ Watch for updates
-- 🍴 Fork for your own use
-
----
-
-## 🎓 Learning Resources
-
-### For Beginners
-
-- [Python Tutorial](https://docs.python.org/3/tutorial/)
-- [Flask Quickstart](https://flask.palletsprojects.com/quickstart/)
-- [JavaScript Basics](https://developer.mozilla.org/en-US/docs/Learn/JavaScript)
-- [Git Tutorial](https://git-scm.com/docs/gittutorial)
-
-### Advanced Topics
-
-- [Dijkstra's Algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
-- [Google Gemini API Docs](https://ai.google.dev/docs)
-- [Leaflet.js Documentation](https://leafletjs.com/reference.html)
-- [REST API Design](https://restfulapi.net/)
+- 🐛 **Bug Reports**: [Open Issue](https://github.com/jivi001/logistics_optimizer_desktop/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/jivi001/logistics_optimizer_desktop/discussions)
+- 📧 **Email**: jiviteshgd28@gmail.com
 
 ---
 
@@ -1012,8 +258,4 @@ If you find this project useful, please consider giving it a ⭐ on GitHub!
 
 © 2025 Nexus Route AI. All rights reserved.
 
----
-
-**Last Updated**: November 1, 2025  
-**Version**: 1.0.0  
-**Maintained**: Yes ✅
+**Version**: 1.0.0 | **Last Updated**: November 1, 2025
