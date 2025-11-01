@@ -10,7 +10,7 @@ from route_optimizer import LogisticsRouteOptimizer # Import your class
 load_dotenv()
 
 # Configure Flask App
-app = Flask(__name__)
+app = Flask(__name__, static_folder='script')
 
 # Configure Gemini API
 try:
