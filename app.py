@@ -1,7 +1,7 @@
 # app.py
 import os
 import json
-import google.generativeai as genai
+import google.genai as genai
 from flask import Flask, jsonify, render_template, request
 from dotenv import load_dotenv
 from route_optimizer import LogisticsRouteOptimizer # Import your class
