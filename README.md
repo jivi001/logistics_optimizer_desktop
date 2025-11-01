@@ -48,21 +48,21 @@ Nexus Route AI is a production-ready logistics platform that delivers:
 ## 🚀 Quick Start
 
 1. **Clone repository**:
-git clone https://github.com/jivi001/logistics_optimizer_desktop.git
-cd logistics_optimizer_desktop
+git clone https://github.com/jivi001/logistics_optimizer_desktop
+- cd logistics_optimizer_desktop
 
 2. **Create virtual environment**:
-python -m venv venv
+- python -m venv venv
 
 3. **Activate virtual environment**:
-Windows:
+- Windows:
 venv\Scripts\activate
 
-macOS/Linux:
+- macOS/Linux:
 source venv/bin/activate
 
 4. **Install dependencies**:
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 5. **Configure environment**
 **Create**.env file and add:
@@ -87,7 +87,6 @@ Optional
 FLASK_DEBUG=true
 PORT=5001
 
-text
 
 **Get Gemini API Key:**
 1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
@@ -105,12 +104,11 @@ nexus-route-ai/
 - ├── templates/
 - │ └── index.html # Main HTML template
 - └── static/
--  ├── css/
--  │ └── style.css # Styling
--  └── js/
--  └── script.js # Frontend logic
+-   ├── css/
+-   │   └── style.css # Styling
+-   └── js/
+-      └── script.js # Frontend logic
 
-text
 
 ## 📖 Usage
 
