@@ -1,5 +1,4 @@
-text
-# 🚚 Nexus Route AI - Smart Logistics Platform
+# 🚚  Route AI - Smart Logistics Platform
 
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0+-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
@@ -10,7 +9,7 @@ text
 
 ## 🎯 Overview
 
-Nexus Route AI is a production-ready logistics platform that delivers:
+ Route AI is a production-ready logistics platform that delivers:
 
 - **Smart Route Planning** using Dijkstra's algorithm
 - **AI-Powered Insights** via Google Gemini
@@ -96,7 +95,7 @@ PORT=5001
 
 ## 📁 Project Structure
 
-nexus-route-ai/
+route-ai/
 - ├── app.py # Flask application entry point
 - ├── route_optimizer.py # Dijkstra's algorithm engine
 - ├── requirements.txt # Python dependencies
@@ -145,7 +144,6 @@ Automatically displays after route calculation:
 - GET /api/get_shortest_route?src={city}&dest={city}
 - POST /api/get_gemini_insights
 
-text
 
 ### AI Features
 
@@ -168,7 +166,6 @@ source venv/bin/activate # macOS/Linux
 venv\Scripts\activate # Windows
 pip install -r requirements.txt
 
-text
 
 **Gemini API Error**
 - Verify `.env` file exists
@@ -252,6 +249,6 @@ Permission is granted to use, copy, modify, merge, publish, distribute, sublicen
 
 **Built with ❤️ for the logistics industry**
 
-© 2025 Nexus Route AI. All rights reserved.
+© 2025 Route AI. All rights reserved.
 
 **Version**: 1.0.0 | **Last Updated**: November 1, 2025
