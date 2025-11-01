@@ -1,13 +1,24 @@
 // script.js - Complete AI-Powered Logistics Route Optimizer
 
-// Global State
+// ===== GLOBAL STATE =====
 let map = null;
 let cityCoordinates = {};
 let routeLayer = null;
 let currentRouteData = null;
 let multiStopList = [];
 
-// DOM Ready
+// Toll rates per 100 km (approximate NHAI rates in INR)
+const TOLL_RATES = {
+    car: 80,           // Car/Jeep/Van
+    lcv: 130,          // Light Commercial Vehicle
+    truck: 270,        // Heavy Truck (2-Axle)
+    'multi-axle': 400  // Multi-Axle Vehicle (3+ Axle)
+};
+
+// Average toll plazas per 100 km on national highways
+const PLAZAS_PER_100KM = 1.5;
+
+// ===== DOM READY =====
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
 });
@@ -18,6 +29,8 @@ function initializeApp() {
     fetchCities();
     attachEventListeners();
     setupFeatureNavigation();
+    setupAIHubToggle();
+    setupTollCalculator();
 }
 
 // ===== MAP FUNCTIONS =====
@@ -114,6 +127,7 @@ async function findRoute() {
     
     closeAlert();
     showLoader(true);
+    hideTollCalculator();
     document.getElementById('find-route-btn').disabled = true;
     
     try {
@@ -503,6 +517,93 @@ async function runSafetyCheck() {
     }
 }
 
+// ===== TOLL CALCULATOR =====
+function setupTollCalculator() {
+    const tollVehicleSelect = document.getElementById('toll-vehicle-type');
+    if (tollVehicleSelect) {
+        tollVehicleSelect.addEventListener('change', () => {
+            if (currentRouteData) {
+                calculateTollCharges(currentRouteData);
+            }
+        });
+    }
+}
+
+function showTollCalculator(routeData) {
+    const tollSection = document.getElementById('toll-calculator');
+    tollSection.classList.remove('hidden');
+    calculateTollCharges(routeData);
+}
+
+function hideTollCalculator() {
+    const tollSection = document.getElementById('toll-calculator');
+    tollSection.classList.add('hidden');
+}
+
+function calculateTollCharges(routeData) {
+    const distance = routeData.distance;
+    const vehicleType = document.getElementById('toll-vehicle-type').value;
+    const ratePerKm = TOLL_RATES[vehicleType] / 100;
+    
+    // Calculate total toll
+    const totalToll = Math.round(distance * ratePerKm);
+    
+    // Calculate estimated toll plazas
+    const estimatedPlazas = Math.ceil((distance / 100) * PLAZAS_PER_100KM);
+    
+    // Calculate cost per 100km
+    const costPer100km = TOLL_RATES[vehicleType];
+    
+    // Update display
+    document.getElementById('total-toll').textContent = `₹${totalToll.toLocaleString('en-IN')}`;
+    document.getElementById('toll-plaza-count').innerHTML = `
+        <span class="plaza-number">${estimatedPlazas}</span>
+        <span class="plaza-text">plazas estimated</span>
+    `;
+    document.getElementById('cost-per-100km').textContent = `₹${costPer100km}`;
+    
+    // Generate route segments
+    generateTollSegments(routeData, vehicleType);
+}
+
+function generateTollSegments(routeData, vehicleType) {
+    const segmentsContainer = document.getElementById('toll-segments');
+    const path = routeData.path;
+    const ratePerKm = TOLL_RATES[vehicleType] / 100;
+    
+    if (path.length < 2) {
+        segmentsContainer.innerHTML = '<p style="color: var(--text-tertiary);">No segments to display</p>';
+        return;
+    }
+    
+    let segmentsHTML = '';
+    const totalDistance = routeData.distance;
+    
+    // Calculate approximate distance per segment
+    const avgSegmentDistance = totalDistance / (path.length - 1);
+    
+    for (let i = 0; i < path.length - 1; i++) {
+        const fromCity = path[i];
+        const toCity = path[i + 1];
+        
+        // Estimate segment distance
+        const segmentDistance = Math.round(avgSegmentDistance);
+        const segmentCost = Math.round(segmentDistance * ratePerKm);
+        
+        segmentsHTML += `
+            <div class="toll-segment-item">
+                <div class="segment-route">
+                    <div class="segment-cities">${fromCity} → ${toCity}</div>
+                    <div class="segment-distance">${segmentDistance} km</div>
+                </div>
+                <div class="segment-cost">₹${segmentCost.toLocaleString('en-IN')}</div>
+            </div>
+        `;
+    }
+    
+    segmentsContainer.innerHTML = segmentsHTML;
+}
+
 // ===== UI HELPER FUNCTIONS =====
 function populateDropdowns(cities) {
     const sourceSelect = document.getElementById('source-city');
@@ -538,6 +639,9 @@ function displayRouteSummary(data) {
             </div>
         </div>
     `;
+    
+    // Show toll calculator
+    showTollCalculator(data);
 }
 
 function showLoader(show) {
@@ -586,47 +690,7 @@ function setupFeatureNavigation() {
     });
 }
 
-// ===== EVENT LISTENERS =====
-function attachEventListeners() {
-    // Main route finder
-    document.getElementById('find-route-btn').addEventListener('click', findRoute);
-    
-    // AI Chat
-    document.getElementById('chat-send-btn').addEventListener('click', sendChatMessage);
-    document.getElementById('chat-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChatMessage();
-    });
-    
-    // ETA Prediction
-    document.getElementById('predict-btn').addEventListener('click', predictDeliveryTime);
-    
-    // Multi-Stop
-    document.getElementById('add-stop-btn').addEventListener('click', addStop);
-    document.getElementById('optimize-stops-btn').addEventListener('click', optimizeMultiStop);
-    
-    // Cost Estimation
-    document.getElementById('cost-btn').addEventListener('click', estimateCost);
-    
-    // Weather Analysis
-    document.getElementById('weather-btn').addEventListener('click', analyzeWeather);
-    
-    // Safety Check
-    document.getElementById('safety-btn').addEventListener('click', runSafetyCheck);
-}
-
-// Make removeStop globally accessible
-window.removeStop = removeStop;
-window.closeAlert = closeAlert;
-// Add to the initializeApp() function
-function initializeApp() {
-    initMap();
-    fetchCities();
-    attachEventListeners();
-    setupFeatureNavigation();
-    setupAIHubToggle(); // Add this line
-}
-
-// Add this new function
+// AI Hub Toggle
 function setupAIHubToggle() {
     const toggleHeader = document.getElementById('ai-hub-toggle');
     const aiHub = document.querySelector('.ai-hub');
@@ -655,3 +719,46 @@ function setupAIHubToggle() {
         }
     });
 }
+
+// ===== EVENT LISTENERS =====
+function attachEventListeners() {
+    // Main route finder
+    document.getElementById('find-route-btn').addEventListener('click', findRoute);
+    
+    // AI Chat
+    document.getElementById('chat-send-btn').addEventListener('click', sendChatMessage);
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChatMessage();
+    });
+    
+    // ETA Prediction
+    document.getElementById('predict-btn').addEventListener('click', predictDeliveryTime);
+    
+    // Multi-Stop
+    document.getElementById('add-stop-btn').addEventListener('click', addStop);
+    document.getElementById('optimize-stops-btn').addEventListener('click', optimizeMultiStop);
+    
+    // Cost Estimation
+    document.getElementById('cost-btn').addEventListener('click', estimateCost);
+    
+    // Weather Analysis
+    document.getElementById('weather-btn').addEventListener('click', analyzeWeather);
+    
+    // Safety Check
+    document.getElementById('safety-btn').addEventListener('click', runSafetyCheck);
+}
+
+// Make functions globally accessible
+window.removeStop = removeStop;
+window.closeAlert = closeAlert;
+window.initializeApp = initializeApp;
+window.displayRouteSummary = displayRouteSummary;
+window.displayRouteOnMap = displayRouteOnMap;
+window.showTollCalculator = showTollCalculator;
+window.hideTollCalculator = hideTollCalculator;
+window.calculateTollCharges = calculateTollCharges;
+window.generateTollSegments = generateTollSegments;
+window.showLoader = showLoader;
+window.showAlert = showAlert;
+window.setupFeatureNavigation = setupFeatureNavigation;
+window  .setupAIHubToggle = setupAIHubToggle;

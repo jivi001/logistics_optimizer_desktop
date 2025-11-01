@@ -86,7 +86,7 @@
             </button>
         </section>
 
-        <!-- AI Features Hub - MOVED TO TOP WITH TOGGLE -->
+        <!-- AI Features Hub - COLLAPSIBLE AT TOP -->
         <section class="ai-hub collapsible-section">
             <div class="hub-toggle-header" id="ai-hub-toggle">
                 <div class="hub-header-content">
@@ -283,13 +283,83 @@
 
         <!-- Results Section -->
         <div class="results-layout">
-            <!-- Map Container -->
+            <!-- Map Container with Toll Calculator -->
             <section class="glass-card map-container">
                 <div id="map" class="interactive-map"></div>
                 <div id="loader" class="loader-pulse hidden">
                     <div class="pulse-ring"></div>
                     <div class="pulse-ring"></div>
                     <div class="pulse-ring"></div>
+                </div>
+                
+                <!-- Toll Calculator Section -->
+                <div id="toll-calculator" class="toll-section hidden">
+                    <div class="toll-header">
+                        <h3 class="toll-title">
+                            <span class="toll-icon">🛣️</span>
+                            Estimated Toll Charges
+                        </h3>
+                        <span class="toll-badge" id="toll-badge">National Highways</span>
+                    </div>
+                    
+                    <div class="toll-content">
+                        <div class="toll-summary">
+                            <div class="toll-item-main">
+                                <span class="toll-label">Total Toll Cost</span>
+                                <span class="toll-value" id="total-toll">₹0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="toll-breakdown">
+                            <div class="toll-detail-item">
+                                <div class="toll-detail-header">
+                                    <span class="toll-detail-icon">🚛</span>
+                                    <span class="toll-detail-label">Vehicle Type</span>
+                                </div>
+                                <select id="toll-vehicle-type" class="toll-select">
+                                    <option value="car">Car/Jeep/Van</option>
+                                    <option value="lcv">Light Commercial Vehicle</option>
+                                    <option value="truck" selected>Heavy Truck (2-Axle)</option>
+                                    <option value="multi-axle">Multi-Axle Vehicle (3+ Axle)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="toll-detail-item">
+                                <div class="toll-detail-header">
+                                    <span class="toll-detail-icon">📊</span>
+                                    <span class="toll-detail-label">Route Toll Plazas</span>
+                                </div>
+                                <div class="toll-plaza-count" id="toll-plaza-count">
+                                    <span class="plaza-number">0</span>
+                                    <span class="plaza-text">plazas estimated</span>
+                                </div>
+                            </div>
+                            
+                            <div class="toll-detail-item">
+                                <div class="toll-detail-header">
+                                    <span class="toll-detail-icon">💰</span>
+                                    <span class="toll-detail-label">Cost per 100 km</span>
+                                </div>
+                                <div class="cost-per-km" id="cost-per-100km">₹0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="toll-details-expand" id="toll-details">
+                            <div class="toll-route-info">
+                                <h4 class="toll-subtitle">Route Segments</h4>
+                                <div id="toll-segments" class="toll-segments-list">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="toll-footer">
+                            <p class="toll-note">
+                                <span class="note-icon">ℹ️</span>
+                                Estimates based on NHAI rates. Actual charges may vary. FASTag recommended for seamless travel.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -331,3 +401,8 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
+
+<html>
+<head>
+    <title>U-2</title>
+    <meta charset="utf-8">
