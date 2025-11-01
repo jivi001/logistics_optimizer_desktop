@@ -22,14 +22,13 @@ try:
     
     genai.configure(api_key=api_key)
     
-    # Try different model names
+    # Try different model names (based on available models)
     model_names = [
-        'gemini-1.5-flash',
-        'gemini-1.5-pro', 
-        'gemini-pro',
-        'models/gemini-1.5-flash',
-        'models/gemini-1.5-pro',
-        'models/gemini-pro'
+        'models/gemini-2.5-flash',
+        'models/gemini-2.0-flash',
+        'models/gemini-flash-latest',
+        'models/gemini-2.5-pro',
+        'models/gemini-pro-latest'
     ]
     
     gemini_model = None
