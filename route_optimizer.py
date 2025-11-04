@@ -19,7 +19,7 @@ class LogisticsRouteOptimizer:
         """Initialize the logistics network graph."""
         self.graph: Dict[str, Dict[str, float]] = {}
         self.city_coordinates: Dict[str, Tuple[float, float]] = {}
-        self.avg_speed_kmh = 60  # Average delivery vehicle speed
+        self.avg_speed_kmh = 50  # Average delivery vehicle speed
         self._initialize_indian_cities_network()
     
     def _initialize_indian_cities_network(self):
@@ -56,118 +56,118 @@ class LogisticsRouteOptimizer:
         # Network connections with distances (in kilometers)
         # Format: {city: {neighbor_city: distance_km}}
         self.graph = {
-            'Mumbai': {
-                'Pune': 150,
-                'Surat': 280,
-                'Nashik': 167,
-                'Nagpur': 820,
-                'Indore': 590
-            },
-            'Delhi': {
-                'Jaipur': 280,
-                'Agra': 230,
-                'Lucknow': 550,
-                'Chandigarh': 244,
-                'Ghaziabad': 20
-            },
-            'Bangalore': {
-                'Chennai': 350,
-                'Hyderabad': 570,
-                'Mysore': 145,
-                'Pune': 840
-            },
-            'Hyderabad': {
-                'Bangalore': 570,
-                'Chennai': 630,
-                'Nagpur': 500,
-                'Visakhapatnam': 620
-            },
-            'Chennai': {
-                'Bangalore': 350,
-                'Hyderabad': 630,
-                'Coimbatore': 500
-            },
-            'Kolkata': {
-                'Patna': 590,
-                'Bhubaneswar': 440,
-                'Asansol': 210
-            },
-            'Pune': {
-                'Mumbai': 150,
-                'Bangalore': 840,
-                'Hyderabad': 560,
-                'Nashik': 210
-            },
-            'Ahmedabad': {
-                'Surat': 265,
-                'Vadodara': 110,
-                'Rajkot': 220,
-                'Indore': 420
-            },
-            'Jaipur': {
-                'Delhi': 280,
-                'Agra': 240,
-                'Udaipur': 400,
-                'Ajmer': 135
-            },
-            'Surat': {
-                'Mumbai': 280,
-                'Ahmedabad': 265,
-                'Vadodara': 150
-            },
-            'Lucknow': {
-                'Delhi': 550,
-                'Kanpur': 85,
-                'Agra': 330,
-                'Patna': 540
-            },
-            'Kanpur': {
-                'Lucknow': 85,
-                'Agra': 300,
-                'Allahabad': 200
-            },
-            'Nagpur': {
-                'Mumbai': 820,
-                'Hyderabad': 500,
-                'Bhopal': 350,
-                'Raipur': 290
-            },
-            'Indore': {
-                'Mumbai': 590,
-                'Bhopal': 195,
-                'Ahmedabad': 420,
-                'Ujjain': 55
-            },
-            'Bhopal': {
-                'Indore': 195,
-                'Nagpur': 350,
-                'Gwalior': 420
-            },
-            'Visakhapatnam': {
-                'Hyderabad': 620,
-                'Vijayawada': 350
-            },
-            'Patna': {
-                'Kolkata': 590,
-                'Lucknow': 540,
-                'Gaya': 100
-            },
-            'Vadodara': {
-                'Ahmedabad': 110,
-                'Surat': 150
-            },
-            'Ghaziabad': {
-                'Delhi': 20,
-                'Meerut': 70
-            },
-            'Agra': {
-                'Delhi': 230,
-                'Jaipur': 240,
-                'Lucknow': 330,
-                'Kanpur': 300,
-                'Gwalior': 120
-            }
+        'Mumbai': {
+            'Pune': 150,
+            'Surat': 280,
+            'Nashik': 167,
+            'Nagpur': 820,
+            'Indore': 590
+        },
+        'Delhi': {
+            'Jaipur': 280,
+            'Agra': 230,
+            'Lucknow': 550,
+            'Chandigarh': 244,
+            'Ghaziabad': 20
+        },
+        'Bangalore': {
+            'Chennai': 350,
+            'Hyderabad': 570,
+            'Mysore': 145,
+            'Pune': 840
+        },
+        'Hyderabad': {
+            'Bangalore': 570,
+            'Chennai': 630,
+            'Nagpur': 500,
+            'Visakhapatnam': 620
+        },
+        'Chennai': {
+            'Bangalore': 350,
+            'Hyderabad': 630,
+            'Coimbatore': 500
+        },
+        'Kolkata': {
+            'Patna': 590,
+            'Bhubaneswar': 440,
+            'Asansol': 210
+        },
+        'Pune': {
+            'Mumbai': 150,
+            'Bangalore': 840,
+            'Hyderabad': 560,
+            'Nashik': 210
+        },
+        'Ahmedabad': {
+            'Surat': 265,
+            'Vadodara': 110,
+            'Rajkot': 220,
+            'Indore': 420
+        },
+        'Jaipur': {
+            'Delhi': 280,
+            'Agra': 240,
+            'Udaipur': 400,
+            'Ajmer': 135
+        },
+        'Surat': {
+            'Mumbai': 280,
+            'Ahmedabad': 265,
+            'Vadodara': 150
+        },
+        'Lucknow': {
+            'Delhi': 550,
+            'Kanpur': 85,
+            'Agra': 330,
+            'Patna': 540
+        },
+        'Kanpur': {
+            'Lucknow': 85,
+            'Agra': 300,
+            'Allahabad': 200
+        },
+        'Nagpur': {
+            'Mumbai': 820,
+            'Hyderabad': 500,
+            'Bhopal': 350,
+            'Raipur': 290
+        },
+        'Indore': {
+            'Mumbai': 590,
+            'Bhopal': 195,
+            'Ahmedabad': 420,
+            'Ujjain': 55
+        },
+        'Bhopal': {
+            'Indore': 195,
+            'Nagpur': 350,
+            'Gwalior': 420
+        },
+        'Visakhapatnam': {
+            'Hyderabad': 620,
+            'Vijayawada': 350
+        },
+        'Patna': {
+            'Kolkata': 590,
+            'Lucknow': 540,
+            'Gaya': 100
+        },
+        'Vadodara': {
+            'Ahmedabad': 110,
+            'Surat': 150
+        },
+        'Ghaziabad': {
+            'Delhi': 20,
+            'Meerut': 70
+        },
+        'Agra': {
+            'Delhi': 230,
+            'Jaipur': 240,
+            'Lucknow': 330,
+            'Kanpur': 300,
+            'Gwalior': 120
         }
+    }
         
         # Make graph bidirectional
         self._make_graph_bidirectional()
