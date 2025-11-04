@@ -29,27 +29,29 @@ class LogisticsRouteOptimizer:
         """
         # City coordinates (lat, lon) for map visualization
         self.city_coordinates = {
-            'Mumbai': (19.0760, 72.8777),
-            'Delhi': (28.7041, 77.1025),
-            'Bangalore': (12.9716, 77.5946),
-            'Hyderabad': (17.3850, 78.4867),
-            'Chennai': (13.0827, 80.2707),
-            'Kolkata': (22.5726, 88.3639),
-            'Pune': (18.5204, 73.8567),
-            'Ahmedabad': (23.0225, 72.5714),
-            'Jaipur': (26.9124, 75.7873),
-            'Surat': (21.1702, 72.8311),
-            'Lucknow': (26.8467, 80.9462),
-            'Kanpur': (26.4499, 80.3319),
-            'Nagpur': (21.1458, 79.0882),
-            'Indore': (22.7196, 75.8577),
-            'Bhopal': (23.2599, 77.4126),
-            'Visakhapatnam': (17.6868, 83.2185),
-            'Patna': (25.5941, 85.1376),
-            'Vadodara': (22.3072, 73.1812),
-            'Ghaziabad': (28.6692, 77.4538),
-            'Agra': (27.1767, 78.0081)
-        }
+    'Mumbai': (19.0760, 72.8777),
+    'Delhi': (28.7041, 77.1025),
+    'Bangalore': (12.9716, 77.5946),
+    'Hyderabad': (17.3850, 78.4867),
+    'Chennai': (13.0827, 80.2707),
+    'Kolkata': (22.5726, 88.3639),
+    'Pune': (18.5204, 73.8567),
+    'Ahmedabad': (23.0225, 72.5714),
+    'Jaipur': (26.9124, 75.7873),
+    'Surat': (21.1702, 72.8311),
+    'Lucknow': (26.8467, 80.9462),
+    'Kanpur': (26.4499, 80.3319),
+    'Nagpur': (21.1458, 79.0882),
+    'Indore': (22.7196, 75.8577),
+    'Bhopal': (23.2599, 77.4126),
+    'Gwalior': (26.2183, 78.1828),
+    'Visakhapatnam': (17.6868, 83.2185),
+    'Patna': (25.5941, 85.1376),
+    'Vadodara': (22.3072, 73.1812),
+    'Ghaziabad': (28.6692, 77.4538),
+    'Agra': (27.1767, 78.0081)
+}
+        
         
         # Network connections with distances (in kilometers)
         # Format: {city: {neighbor_city: distance_km}}
