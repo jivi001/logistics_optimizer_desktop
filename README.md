@@ -109,7 +109,7 @@ route-ai/
 -      └── script.js # Frontend logic
 
 
-## 📖 Usage
+## 📖 Usage.
 
 ### Basic Route Planning
 
